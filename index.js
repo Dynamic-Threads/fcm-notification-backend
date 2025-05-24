@@ -4,9 +4,12 @@ const admin = require('firebase-admin');
 const app = express();
 app.use(express.json());
 
-// Initialize Firebase Admin SDK with your service account JSON
-const serviceAccount = require('./serviceAccountKey.json'); // get this from Firebase Console
+// 🔐 Load service account from base64 environment variable
+const serviceAccount = JSON.parse(
+  Buffer.from(process.env.FIREBASE_CONFIG_BASE64, 'base64').toString('utf8')
+);
 
+// ✅ Initialize Firebase Admin SDK
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
 });
@@ -40,7 +43,7 @@ app.post('/send-notice', async (req, res) => {
   }
 });
 
-// Start server
+// 🌐 Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
