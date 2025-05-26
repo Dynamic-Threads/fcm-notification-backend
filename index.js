@@ -24,7 +24,7 @@ app.post('/send-notice', async (req, res) => {
 
   const message = {
     notification: {
-      title: `New Notice: ${title}`,
+      title: `New Update: ${title}`,
       body: `Posted by: ${postedBy}`,
     },
     data: {
